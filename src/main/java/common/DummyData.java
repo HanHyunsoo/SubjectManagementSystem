@@ -7,6 +7,7 @@ import model.GradeInfo;
 import model.Professor;
 import model.Student;
 import model.Subject;
+import model.User;
 
 @Getter
 public class DummyData {
@@ -17,15 +18,119 @@ public class DummyData {
     private final List<GradeInfo> gradeInfos = new ArrayList<>();
 
     public void init() {
-        // TODO: 2022/11/04 @ì •ë¯¼ì„ ì´ëŸ°ì‹ìœ¼ë¡œ ë”ë¯¸ë°ì´í„° ë§Œë“¤ë©´ ë  ê²ƒ ê°™ìŠµë‹ˆë‹¤!! ë§ì´ëŠ” ë§ê³  ì €í¬ ì •ë„ë§Œ ë§Œë“¤ë©´ ë  ê²ƒê°™ì•„ìš”
-        Student student = Student.builder()
+    	
+    	//±³¼ö
+    	//Professor´Â UserÅ¬·¡½º¿¡ ÀÖ´Â ÇÊµå ¸ø ¹Ş¾Æ¿À³ª¿ä?
+    	Professor professor_1 = Professor.builder()
+    									.build();
+    									
+    	professors.add(professor_1);	
+    	
+    	//ÇĞ»ı
+        Student student_1 = Student.builder()
                                  .id(0L)
-                                 .name("í•œí˜„ìˆ˜")
+                                 .name("ÇÑÇö¼ö")
                                  .userId("201814043")
                                  .password("1111")
                                  .build();
         
-        students.add(student);
-
+        Student student_2 = Student.builder()
+						         .id(1L)
+						         .name("ÇÑ»óÈÆ")
+						         .userId("201714043")
+						         .password("2222")
+						         .build();
+        
+        Student student_3 = Student.builder()
+						         .id(2L)
+						         .name("ÃÖÁØÈ£")
+						         .userId("201632033")
+						         .password("3333")
+						         .build();
+        
+        Student student_4 = Student.builder()
+						         .id(3L)
+						         .name("Á¤¹Î¼®")
+						         .userId("201632028")
+						         .password("4444")
+						         .build();
+        
+        students.add(student_1);
+        students.add(student_2);
+        students.add(student_3);
+        students.add(student_4);
+        
+        //°ú¸ñ
+        Subject subject_1 = Subject.builder()
+        							.id(100L)
+        							.name("ÀÚ¹Ù ÇÁ·ÎÁ§Æ®")
+        							.location("6201")
+        							.startTime("09:00")
+        							.endTime("11:50")
+        							.teacher(professor_1)
+        							.students(students)
+        							.build();
+        
+        subjects.add(subject_1);
+        
+        //¼ºÀû
+        //ÀÚ¹Ù ÇÁ·ÎÁ§Æ®
+        //ÇÑÇö¼ö ÇĞ»ı
+        GradeInfo gradeInfo_1 = GradeInfo.builder()
+        								.id(0L)
+        								.subject(subject_1)
+        								.student(student_1)
+        								.attendanceScore(10)
+        								.midtermExamScore(42)
+        								.finalExamScore(43)
+        								.totalScore(95)
+        								.grade("A+")
+        								.note("Âü ÀßÇß¾î¿ä.")
+        								.build();
+        
+        //ÇÑ»óÈÆ ÇĞ»ı
+        GradeInfo gradeInfo_2 = GradeInfo.builder()
+										.id(1L)
+										.subject(subject_1)
+										.student(student_2)
+										.attendanceScore(9)
+										.midtermExamScore(41)
+										.finalExamScore(42)
+										.totalScore(92)
+										.grade("A")
+										.note("Âü ÀßÇß¾î¿ä.")
+										.build();
+        
+        //ÃÖÁØÈ£ ÇĞ»ı
+        GradeInfo gradeInfo_3 = GradeInfo.builder()
+										.id(3L)
+										.subject(subject_1)
+										.student(student_3)
+										.attendanceScore(8)
+										.midtermExamScore(40)
+										.finalExamScore(40)
+										.totalScore(88)
+										.grade("B+")
+										.note("ÀßÇß¾î¿ä.")
+										.build();
+        
+        //Á¤¹Î¼® ÇĞ»ı
+        GradeInfo gradeInfo_4 = GradeInfo.builder()
+										.id(4L)
+										.subject(subject_1)
+										.student(student_4)
+										.attendanceScore(7)
+										.midtermExamScore(30)
+										.finalExamScore(40)
+										.totalScore(77)
+										.grade("C+")
+										.note("ºĞ¹ßÇÏ¼¼¿ä.")
+										.build();
+        
+        gradeInfos.add(gradeInfo_1);
+        gradeInfos.add(gradeInfo_2);
+        gradeInfos.add(gradeInfo_3);
+        gradeInfos.add(gradeInfo_4);
+        
     }
 }
