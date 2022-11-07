@@ -1,9 +1,12 @@
 package model;
 
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 
-@Builder
+@AllArgsConstructor
 @Getter
+@SuperBuilder
 public class Professor extends User {
+
 }
