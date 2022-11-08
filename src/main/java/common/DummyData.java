@@ -19,38 +19,42 @@ public class DummyData {
 
     public void init() {
     	
-    	//±³¼ö
-    	//Professor´Â UserÅ¬·¡½º¿¡ ÀÖ´Â ÇÊµå ¸ø ¹Ş¾Æ¿À³ª¿ä?
+    	//êµìˆ˜
     	Professor professor_1 = Professor.builder()
-    									.build();
+						    			.id(1000L)
+						    			.name("í™ì„±ì¤€")
+						    			.userId("12345678")
+						    			.password("5555")
+						    			.build();
+    									
     									
     	professors.add(professor_1);	
     	
-    	//ÇĞ»ı
+    	//í•™ìƒ
         Student student_1 = Student.builder()
                                  .id(0L)
-                                 .name("ÇÑÇö¼ö")
+                                 .name("í•œí˜„ìˆ˜")
                                  .userId("201814043")
                                  .password("1111")
                                  .build();
         
         Student student_2 = Student.builder()
 						         .id(1L)
-						         .name("ÇÑ»óÈÆ")
-						         .userId("201714043")
+						         .name("í•œìƒí›ˆ")
+						         .userId("201732037")
 						         .password("2222")
 						         .build();
         
         Student student_3 = Student.builder()
 						         .id(2L)
-						         .name("ÃÖÁØÈ£")
+						         .name("ìµœì¤€í˜¸")
 						         .userId("201632033")
 						         .password("3333")
 						         .build();
         
         Student student_4 = Student.builder()
 						         .id(3L)
-						         .name("Á¤¹Î¼®")
+						         .name("ì •ë¯¼ì„")
 						         .userId("201632028")
 						         .password("4444")
 						         .build();
@@ -60,10 +64,10 @@ public class DummyData {
         students.add(student_3);
         students.add(student_4);
         
-        //°ú¸ñ
+        //ê³¼ëª©
         Subject subject_1 = Subject.builder()
         							.id(100L)
-        							.name("ÀÚ¹Ù ÇÁ·ÎÁ§Æ®")
+        							.name("ìë°” í”„ë¡œì íŠ¸")
         							.location("6201")
         							.startTime("09:00")
         							.endTime("11:50")
@@ -73,9 +77,9 @@ public class DummyData {
         
         subjects.add(subject_1);
         
-        //¼ºÀû
-        //ÀÚ¹Ù ÇÁ·ÎÁ§Æ®
-        //ÇÑÇö¼ö ÇĞ»ı
+        //ì„±ì 
+        //ìë°” í”„ë¡œì íŠ¸
+        //í•œí˜„ìˆ˜ í•™ìƒ
         GradeInfo gradeInfo_1 = GradeInfo.builder()
         								.id(0L)
         								.subject(subject_1)
@@ -85,10 +89,10 @@ public class DummyData {
         								.finalExamScore(43)
         								.totalScore(95)
         								.grade("A+")
-        								.note("Âü ÀßÇß¾î¿ä.")
+        								.note("ì°¸ ì˜í–ˆì–´ìš”.")
         								.build();
         
-        //ÇÑ»óÈÆ ÇĞ»ı
+        //í•œìƒí›ˆ í•™ìƒ
         GradeInfo gradeInfo_2 = GradeInfo.builder()
 										.id(1L)
 										.subject(subject_1)
@@ -98,10 +102,10 @@ public class DummyData {
 										.finalExamScore(42)
 										.totalScore(92)
 										.grade("A")
-										.note("Âü ÀßÇß¾î¿ä.")
+										.note("ì°¸ ì˜í–ˆì–´ìš”.")
 										.build();
         
-        //ÃÖÁØÈ£ ÇĞ»ı
+        //ìµœì¤€í˜¸ í•™ìƒ
         GradeInfo gradeInfo_3 = GradeInfo.builder()
 										.id(3L)
 										.subject(subject_1)
@@ -111,10 +115,10 @@ public class DummyData {
 										.finalExamScore(40)
 										.totalScore(88)
 										.grade("B+")
-										.note("ÀßÇß¾î¿ä.")
+										.note("ì˜í–ˆì–´ìš”.")
 										.build();
         
-        //Á¤¹Î¼® ÇĞ»ı
+        //ì •ë¯¼ì„ í•™ìƒ
         GradeInfo gradeInfo_4 = GradeInfo.builder()
 										.id(4L)
 										.subject(subject_1)
@@ -124,7 +128,7 @@ public class DummyData {
 										.finalExamScore(40)
 										.totalScore(77)
 										.grade("C+")
-										.note("ºĞ¹ßÇÏ¼¼¿ä.")
+										.note("ë¶„ë°œí•˜ì„¸ìš”.")
 										.build();
         
         gradeInfos.add(gradeInfo_1);
