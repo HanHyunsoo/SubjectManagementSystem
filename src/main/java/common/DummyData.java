@@ -21,50 +21,9 @@ public class DummyData extends JFrame implements ActionListener{
     private final List<Student> students = new ArrayList<>();
     private final List<Subject> subjects = new ArrayList<>();
     private final List<GradeInfo> gradeInfos = new ArrayList<>();
-
-    //배경
-    private Image backGround = new ImageIcon(DummyData.class.getResource("../images/backGround.png")).getImage();
-    //버튼
-    private JButton manageSubject, manageStudent;
-    private JPanel panel;
-    //라벨
-    private JLabel label;
-    
+  
     public DummyData(){
-    	//프레임
-    	setTitle("성적관리 시스템");
-    	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    	Container c = getContentPane();
-    	c.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 50));
-    	setSize(1280, 720);
-    	setResizable(false);
-    	setLocationRelativeTo(null);
-    	setVisible(true);
     	
-    	//라벨, 버튼
-    	panel = new JPanel(null);
-    	
-    	label = new JLabel();	
-    	label.setBounds(0, 0, 100, 30);
-    	label.setFont(new Font("Serif", Font.BOLD, 13));
-    	label.setText("성적 관리 시스템");
-    	panel.add(label);
-    	
-    	manageSubject = new JButton("과목 관리");
-    	manageSubject.setBounds(10, 100, 100, 30);
-    	panel.add(manageSubject);
-    	
-    	manageStudent = new JButton("학생 관리");
-    	manageStudent.setBounds(10, 180, 100, 30);
-    	panel.add(manageStudent);
-    	
-    	manageSubject.addActionListener(this);
-    	manageStudent.addActionListener(this);
-    	
-    	panel.setPreferredSize(new Dimension(200, 720));
-    	add(panel);
-    	
-    	panel.setVisible(true);
     }
     
     //더미데이터 초기화
@@ -129,7 +88,78 @@ public class DummyData extends JFrame implements ActionListener{
         gradeInfos.add(gradeInfo_4);
 
     }
+       
+    //메인메소드
+    public static void main(String[] args) {
+    	
+    	//더미데이터 초기화
+        DummyData dummyData = new DummyData();
+        dummyData.init();
+        
+        //뷰 생성
+        View view = new View();
+        view.MakeView();
+    }
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}    
+}
+
+//View 관련
+class View extends JFrame implements ActionListener{
+	
+	//과목, 학생 관리 버튼
+    private JButton manageSubject, manageStudent;
+    //패널
+    private JPanel panel;
+    //라벨(과목 관리 시스템)
+    private JLabel label;
     
+	void MakeView()
+    {
+    	//프레임
+    	setTitle("성적관리 시스템");
+    	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    	Container c = getContentPane();
+    	c.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+    	setSize(1280, 720);
+    	setResizable(false);
+    	setLocationRelativeTo(null);
+    	
+    	//패널
+    	panel = new JPanel(null);
+    	panel.setBackground(Color.gray);
+    	
+    	//라벨
+    	label = new JLabel();	
+    	label.setBounds(20, -350, 200, 800);
+    	label.setFont(new Font("Serif", Font.BOLD, 20));
+    	label.setText("성적 관리 시스템");
+    	panel.add(label);
+    	
+    	//과목 관리 버튼
+    	manageSubject = new JButton("과목 관리");
+    	manageSubject.setBounds(50, 100, 100, 30);
+    	panel.add(manageSubject);
+    	
+    	//학생 관리 버튼
+    	manageStudent = new JButton("학생 관리");
+    	manageStudent.setBounds(50, 180, 100, 30);
+    	panel.add(manageStudent);
+    	
+    	manageSubject.addActionListener(this);
+    	manageStudent.addActionListener(this);
+    	
+    	panel.setPreferredSize(new Dimension(200, 720));
+    	add(panel);
+    	
+    	setVisible(true);  	
+    }
+	
+	//버튼 클릭 이벤트
     @Override
     public void actionPerformed(ActionEvent e) {
     	if(e.getSource()==manageSubject) {
@@ -147,20 +177,9 @@ public class DummyData extends JFrame implements ActionListener{
     		StudentFrame.setVisible(true);
     	}
     }
-    
-    //배경화면 그리기
-    public void paint(Graphics g) {
-    	g.drawImage(backGround, 0, 0, null);
-    }
-
-    //메인메소드
-    public static void main(String[] args) {
-        DummyData dummyData = new DummyData();
-        dummyData.init();
-    }
 }
 
-//과목 관리 창
+//과목 관리 버튼 클릭 -> 과목 관리 창
 class SubjectManage extends JFrame{
 	
 	GridBagLayout gbl = new GridBagLayout();
@@ -194,7 +213,7 @@ class SubjectManage extends JFrame{
 	}
 }
 
-//학생 관리 창
+//학생 관리 버튼 클릭 -> 학생 관리 창
 class StudentManage extends JFrame{
 	
 	GridBagLayout gbl = new GridBagLayout();
