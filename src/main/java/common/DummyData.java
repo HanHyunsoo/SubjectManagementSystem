@@ -8,14 +8,66 @@ import model.Professor;
 import model.Student;
 import model.Subject;
 
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
+import java.awt.*;
+import java.awt.event.*;
+
 @Getter
-public class DummyData {
+public class DummyData extends JFrame implements ActionListener{
 
     private final List<Professor> professors = new ArrayList<>();
     private final List<Student> students = new ArrayList<>();
     private final List<Subject> subjects = new ArrayList<>();
     private final List<GradeInfo> gradeInfos = new ArrayList<>();
 
+    //배경
+    private Image backGround = new ImageIcon(DummyData.class.getResource("../images/backGround.png")).getImage();
+    //버튼
+    private JButton manageSubject, manageStudent;
+    private JPanel panel;
+    //라벨
+    private JLabel label;
+    
+    public DummyData(){
+    	//프레임
+    	setTitle("성적관리 시스템");
+    	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    	Container c = getContentPane();
+    	c.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 50));
+    	setSize(1280, 720);
+    	setResizable(false);
+    	setLocationRelativeTo(null);
+    	setVisible(true);
+    	
+    	//라벨, 버튼
+    	panel = new JPanel(null);
+    	
+    	label = new JLabel();	
+    	label.setBounds(0, 0, 100, 30);
+    	label.setFont(new Font("Serif", Font.BOLD, 13));
+    	label.setText("성적 관리 시스템");
+    	panel.add(label);
+    	
+    	manageSubject = new JButton("과목 관리");
+    	manageSubject.setBounds(10, 100, 100, 30);
+    	panel.add(manageSubject);
+    	
+    	manageStudent = new JButton("학생 관리");
+    	manageStudent.setBounds(10, 180, 100, 30);
+    	panel.add(manageStudent);
+    	
+    	manageSubject.addActionListener(this);
+    	manageStudent.addActionListener(this);
+    	
+    	panel.setPreferredSize(new Dimension(200, 720));
+    	add(panel);
+    	
+    	panel.setVisible(true);
+    }
+    
+    //더미데이터 초기화
     public void init() {
 
         //교수
@@ -77,9 +129,113 @@ public class DummyData {
         gradeInfos.add(gradeInfo_4);
 
     }
+    
+    @Override
+    public void actionPerformed(ActionEvent e) {
+    	if(e.getSource()==manageSubject) {
+    		//과목 관리 버튼
+    		JFrame SubjectFrame = new SubjectManage();
+    		SubjectFrame.setSize(640, 360);
+    		SubjectFrame.setLocationRelativeTo(null);
+    		SubjectFrame.setVisible(true);
+    		
+    	}else if(e.getSource()==manageStudent) {
+    		//학생 관리 버튼
+    		JFrame StudentFrame = new StudentManage();
+    		StudentFrame.setSize(640, 360);
+    		StudentFrame.setLocationRelativeTo(null);
+    		StudentFrame.setVisible(true);
+    	}
+    }
+    
+    //배경화면 그리기
+    public void paint(Graphics g) {
+    	g.drawImage(backGround, 0, 0, null);
+    }
 
+    //메인메소드
     public static void main(String[] args) {
         DummyData dummyData = new DummyData();
         dummyData.init();
     }
+}
+
+//과목 관리 창
+class SubjectManage extends JFrame{
+	
+	GridBagLayout gbl = new GridBagLayout();
+	GridBagConstraints gbc = new GridBagConstraints();
+	
+	SubjectManage(){
+		super("과목 관리");
+		
+		DefaultTableModel dtm = new DefaultTableModel() {
+			public boolean isCellEditable(int row, int col) {
+				return !(col==0);
+			}
+		};
+		
+		
+		
+		Object[][] data = new Object[1][3];
+		
+		data[0][0] = "자바 프로젝트";
+		data[0][1] = "6201";
+		data[0][2] = "30";
+		
+		String[] columns = {"강의 과목", "강의실", "수강 인원"};
+		
+		dtm.setDataVector(data, columns);
+		
+		JTable table = new JTable(dtm);
+		
+		add(new JScrollPane(table), BorderLayout.CENTER);
+		
+	}
+}
+
+//학생 관리 창
+class StudentManage extends JFrame{
+	
+	GridBagLayout gbl = new GridBagLayout();
+	GridBagConstraints gbc = new GridBagConstraints();
+	
+	StudentManage(){
+		super("학생 관리");
+		
+		DefaultTableModel dtm = new DefaultTableModel() {
+			public boolean isCellEditable(int row, int col) {
+				return !(col==0);
+			}
+		};
+		
+		
+		
+		Object[][] data = new Object[4][3];
+		
+		//일단 그냥 문자열 그대로 넣었습니다..
+		data[0][0] = "201814043";
+		data[0][1] = "한현수";
+		data[0][2] = "3";
+		
+		data[1][0] = "201732037";
+		data[1][1] = "한상훈";
+		data[1][2] = "4";
+		
+		data[2][0] = "201632033";
+		data[2][1] = "최준호";
+		data[2][2] = "4";
+		
+		data[3][0] = "201632028";
+		data[3][1] = "정민석";
+		data[3][2] = "4";
+		
+		String[] columns = {"학번", "이름", "학년"};
+		
+		dtm.setDataVector(data, columns);
+		
+		JTable table = new JTable(dtm);
+		
+		add(new JScrollPane(table), BorderLayout.CENTER);
+	}
 }
