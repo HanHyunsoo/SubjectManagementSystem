@@ -28,14 +28,14 @@ public class ProfessorView {
 //View 관련
 class View extends JFrame implements ActionListener{
 	
-	//과목, 학생 관리 버튼
-  private JButton manageSubject, manageStudent;
+  //과목, 학생 관리, 메세지 버튼
+  private JButton manageSubject, manageStudent, messageBtn;
   //패널
   private JPanel panel;
   //라벨(과목 관리 시스템)
   private JLabel label;
   
-	void MakeView()
+  void MakeView()
   {
   	//프레임
   	setTitle("성적관리 시스템");
@@ -67,8 +67,14 @@ class View extends JFrame implements ActionListener{
   	manageStudent.setBounds(50, 180, 100, 30);
   	panel.add(manageStudent);
   	
+  	//메세지 버튼
+  	messageBtn = new JButton("메세지");
+  	messageBtn.setBounds(50, 260, 100, 30);
+  	panel.add(messageBtn);
+  	
   	manageSubject.addActionListener(this);
   	manageStudent.addActionListener(this);
+  	messageBtn.addActionListener(this);
   	
   	panel.setPreferredSize(new Dimension(200, 720));
   	add(panel);
@@ -82,16 +88,25 @@ class View extends JFrame implements ActionListener{
   	if(e.getSource()==manageSubject) {
   		//과목 관리 버튼
   		JFrame SubjectFrame = new SubjectManage();
-  		SubjectFrame.setSize(640, 360);
-  		SubjectFrame.setLocationRelativeTo(null);
+  		SubjectFrame.setSize(1080, 690);
+  		SubjectFrame.setLocation(310, 145);
+  		//SubjectFrame.setLocationRelativeTo(null);
   		SubjectFrame.setVisible(true);
   		
   	}else if(e.getSource()==manageStudent) {
   		//학생 관리 버튼
   		JFrame StudentFrame = new StudentManage();
-  		StudentFrame.setSize(640, 360);
-  		StudentFrame.setLocationRelativeTo(null);
+  		StudentFrame.setSize(1080, 690);
+  		StudentFrame.setLocation(310, 145);
+  		//StudentFrame.setLocationRelativeTo(null);
   		StudentFrame.setVisible(true);
+  	}else if(e.getSource()==messageBtn) {
+  		//메세지 버튼
+  		JFrame messageFrame = new MessageToStudent();
+  		messageFrame.setSize(1080, 690);
+  		messageFrame.setLocation(310, 145);
+  		//messageFrame.setLocationRelativeTo(null);
+  		messageFrame.setVisible(true);
   	}
   }
 }
@@ -173,5 +188,33 @@ class StudentManage extends JFrame{
 		JTable table = new JTable(dtm);
 		
 		add(new JScrollPane(table), BorderLayout.CENTER);
+	}
+}
+
+//메세지 버튼 클릭 -> 메세지 창
+class MessageToStudent extends JFrame{
+	
+	MessageToStudent(){
+		super("메세지");
+		
+		// JTextArea
+		JTextArea jt1 = new JTextArea();
+		jt1.setBounds(50, 75, 200, 200);
+		jt1.setFont(new Font("바탕",Font.BOLD,17));
+				
+		// JButton
+		JButton bt1 = new JButton("전송");
+		bt1.setBounds(50, 300, 100, 30);
+		bt1.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String text = jt1.getText();
+				String words[] =text.split("\\s");
+				}
+			});
+		add(jt1);add(bt1);
+		setSize(1080, 690);
+		setLayout(null);
+		setVisible(true);
 	}
 }
