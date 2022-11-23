@@ -7,6 +7,6 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @Getter
 @SuperBuilder
-public class Professor extends User {
+public class Professor extends User{
 
 }

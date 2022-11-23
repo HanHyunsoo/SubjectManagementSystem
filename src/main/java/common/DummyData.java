@@ -9,13 +9,18 @@ import model.Student;
 import model.Subject;
 
 @Getter
-public class DummyData {
+public class DummyData{
 
     private final List<Professor> professors = new ArrayList<>();
     private final List<Student> students = new ArrayList<>();
     private final List<Subject> subjects = new ArrayList<>();
     private final List<GradeInfo> gradeInfos = new ArrayList<>();
-
+  
+    public DummyData(){
+    	
+    }
+    
+    //더미데이터 초기화
     public void init() {
 
         //교수
@@ -77,8 +82,11 @@ public class DummyData {
         gradeInfos.add(gradeInfo_4);
 
     }
-
+       
+    //메인메소드
     public static void main(String[] args) {
+    	
+    	//더미데이터 초기화
         DummyData dummyData = new DummyData();
         dummyData.init();
     }
