@@ -32,44 +32,63 @@ class View extends JFrame implements ActionListener{
   private JButton manageSubject, manageStudent, messageBtn;
   //패널
   private JPanel panel;
-  //라벨(과목 관리 시스템)
-  private JLabel label;
-  
-  void MakeView()
-  {
+  //라벨(과목 관리 시스템, 학교 로고)
+  private JLabel label, logo;
+  //배경
+  private JLabel bgLabel;
+  private JPanel bgPanel;
+ 
+  void MakeView(){
+	
   	//프레임
   	setTitle("성적관리 시스템");
   	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+  	
   	Container c = getContentPane();
   	c.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+  	
   	setSize(1280, 720);
   	setResizable(false);
   	setLocationRelativeTo(null);
   	
   	//패널
   	panel = new JPanel(null);
-  	panel.setBackground(Color.gray);
+  	panel.setBackground(Color.cyan);
+  	
+  	bgPanel = new JPanel(null);
   	
   	//라벨
+  	//배경
+  	bgLabel = new JLabel();
+  	bgLabel.setIcon(new ImageIcon(getClass().getResource("/images/backGround.png")));
+  	bgLabel.setBounds(0, 0, 1080, 720);
+  	bgPanel.add(bgLabel);
+  	bgPanel.setVisible(true);
+  	//로고
+  	logo = new JLabel();
+    logo.setIcon(new ImageIcon(getClass().getResource("/images/logo(1)(1).png"))); 
+  	logo.setBounds(10, 20, 180, 30);
+  	panel.add(logo);
+  	//제목
   	label = new JLabel();	
-  	label.setBounds(20, -350, 200, 800);
+  	label.setBounds(20, 60, 180, 30);
   	label.setFont(new Font("Serif", Font.BOLD, 20));
   	label.setText("성적 관리 시스템");
   	panel.add(label);
   	
   	//과목 관리 버튼
   	manageSubject = new JButton("과목 관리");
-  	manageSubject.setBounds(50, 100, 100, 30);
+  	manageSubject.setBounds(50, 120, 100, 30);
   	panel.add(manageSubject);
   	
   	//학생 관리 버튼
   	manageStudent = new JButton("학생 관리");
-  	manageStudent.setBounds(50, 180, 100, 30);
+  	manageStudent.setBounds(50, 200, 100, 30);
   	panel.add(manageStudent);
   	
   	//메세지 버튼
   	messageBtn = new JButton("메세지");
-  	messageBtn.setBounds(50, 260, 100, 30);
+  	messageBtn.setBounds(50, 280, 100, 30);
   	panel.add(messageBtn);
   	
   	manageSubject.addActionListener(this);
@@ -78,6 +97,9 @@ class View extends JFrame implements ActionListener{
   	
   	panel.setPreferredSize(new Dimension(200, 720));
   	add(panel);
+  	
+  	bgPanel.setPreferredSize(new Dimension(1065, 720));
+  	add(bgPanel);
   	
   	setVisible(true);  	
   }
@@ -118,6 +140,7 @@ class SubjectManage extends JFrame{
 	GridBagConstraints gbc = new GridBagConstraints();
 	
 	SubjectManage(){
+		
 		super("과목 관리");
 		
 		DefaultTableModel dtm = new DefaultTableModel() {
