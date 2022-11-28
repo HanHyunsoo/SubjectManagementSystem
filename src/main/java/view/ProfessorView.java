@@ -1,6 +1,7 @@
 package view;
 
 import common.DummyData;
+import model.GradeInfo;
 import model.Subject;
 import model.User;
 import model.UserType;
@@ -52,7 +53,7 @@ class View extends JFrame implements ActionListener{
 	}
 
 	//과목, 학생 관리, 메세지 버튼
-  private JButton manageSubject, manageStudent, messageBtn, createStudent, createSubject;
+  private JButton manageSubject, manageStudent, messageBtn, createStudent, createSubject, logout;
   //패널
   private JPanel panel;
   //라벨(과목 관리 시스템, 학교 로고)
@@ -124,10 +125,15 @@ class View extends JFrame implements ActionListener{
   	messageBtn = new JButton("메세지");
   	messageBtn.setBounds(50, 440, 100, 30);
   	panel.add(messageBtn);
-  	
-  	manageSubject.addActionListener(this);
+
+	  logout = new JButton("로그아웃");
+	  logout.setBounds(50, 520, 100, 30);
+	  panel.add(logout);
+
+	  manageSubject.addActionListener(this);
   	manageStudent.addActionListener(this);
   	messageBtn.addActionListener(this);
+	  logout.addActionListener(this);
   	
   	panel.setPreferredSize(new Dimension(200, 720));
   	add(panel);
@@ -237,6 +243,24 @@ class View extends JFrame implements ActionListener{
 					.students(students)
 					.build();
 
+			students.forEach(x -> {
+				x.addSubject(subject);
+
+				GradeInfo gradeInfo = GradeInfo.builder()
+						.id(dummyData.getGradeInfos().size() + 1L)
+						.subject(subject)
+						.student(x)
+						.attendanceScore(null)
+						.midtermExamScore(null)
+						.finalExamScore(null)
+						.totalScore(null)
+						.grade("미정")
+						.note("")
+						.build();
+
+				dummyData.getGradeInfos().add(gradeInfo);
+			});
+
 			dummyData.getSubjects().add(subject);
 			jFrame.dispose();
 		});
@@ -259,6 +283,9 @@ class View extends JFrame implements ActionListener{
 		messageFrame.setLocation(310, 145);
 		//messageFrame.setLocationRelativeTo(null);
 		messageFrame.setVisible(true);
+	} else if (e.getSource() == logout) {
+		  this.dispose();
+		  new Loginframe(dummyData).setVisible(true);
 	}
   }
 }
@@ -299,7 +326,12 @@ class SubjectManage extends JFrame{
 		
 //		dtm.setDataVector(data, columns);
 		
-		JTable table = new JTable(data, columns);
+		JTable table = new JTable();
+		table.setModel(new DefaultTableModel(data, columns) {
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		});
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -345,17 +377,15 @@ class StudentManage extends JFrame{
 		
 		String[] columns = {"학번", "이름"};
 		
-		JTable table = new JTable(data, columns);
-		
+		JTable table = new JTable();
+
+		table.setModel(new DefaultTableModel(data, columns) {
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		});
+
 		add(new JScrollPane(table), BorderLayout.CENTER);
-	}
-}
-
-class StudentBySubjectManage extends StudentManage {
-
-	StudentBySubjectManage(String title, List<User> students) {
-		super(title, students);
-		JButton button = new JButton("학생 추가");
 	}
 }
 

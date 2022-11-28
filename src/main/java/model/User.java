@@ -22,7 +22,7 @@ public class User {
     private List<Subject> subjects = new ArrayList<>();
     private UserType userType;
 
-    private void addSubject(Subject subject) {
+    public void addSubject(Subject subject) {
         subjects.add(subject);
     }
 }

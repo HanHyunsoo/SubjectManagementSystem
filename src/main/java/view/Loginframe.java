@@ -17,12 +17,13 @@ import java.util.List;
  * @author User
  */
 public class Loginframe extends javax.swing.JFrame {
-    private DummyData dummyData = new DummyData();
+    private DummyData dummyData;
 
     /**
      * Creates new form NewJFrame1
      */
-    public Loginframe() {
+    public Loginframe(DummyData dummyData) {
+        this.dummyData = dummyData;
         initComponents();
     }
 
@@ -34,7 +35,6 @@ public class Loginframe extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        dummyData.init();
         kGradientPanel1 = new KGradientPanel();
         jPanel3 = new javax.swing.JPanel();
         LBLlogin = new javax.swing.JLabel();
@@ -190,11 +190,14 @@ public class Loginframe extends javax.swing.JFrame {
                     new ProfessorView(dummyData, user).init();
                 }
                 isLogin = true;
+                break;
             }
         }
 
         if (!isLogin) {
             JOptionPane.showMessageDialog(null, "Id 혹은 Password가 일치하지 않습니다.");
+        } else {
+            this.dispose();
         }
     }//GEN-LAST:event_BtnLoginActionPerformed
 
@@ -233,11 +236,12 @@ public class Loginframe extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-
+        DummyData d = new DummyData();
+        d.init();
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Loginframe().setVisible(true);
+                new Loginframe(d).setVisible(true);
             }
         });
     }
