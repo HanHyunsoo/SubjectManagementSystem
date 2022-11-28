@@ -54,7 +54,7 @@ public class DummyData{
         students.add(user_5);
 
         //과목
-        Subject subject_1 = Subject.builder().id(100L).name("자바 프로젝트").location("6201")
+        Subject subject_1 = Subject.builder().id(1L).name("자바 프로젝트").location("6201")
                 .startTime("09:00").endTime("11:50").teacher(user_1).students(students)
                 .build();
 
