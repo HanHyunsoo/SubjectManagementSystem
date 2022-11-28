@@ -1,18 +1,10 @@
 package common;
 
-import java.util.ArrayList;
-import java.util.List;
-import lombok.Getter;
-import model.GradeInfo;
-import model.Professor;
-import model.Student;
-import model.Subject;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class ProfessorView {
 
@@ -60,13 +52,13 @@ class View extends JFrame implements ActionListener{
   	//라벨
   	//배경
   	bgLabel = new JLabel();
-  	bgLabel.setIcon(new ImageIcon(getClass().getResource("/images/backGround.png")));
+  	bgLabel.setIcon(new ImageIcon("images/professor/backGround.png"));
   	bgLabel.setBounds(0, 0, 1080, 720);
   	bgPanel.add(bgLabel);
   	bgPanel.setVisible(true);
   	//로고
   	logo = new JLabel();
-    logo.setIcon(new ImageIcon(getClass().getResource("/images/logo(1)(1).png"))); 
+    logo.setIcon(new ImageIcon("images/professor/logo(1)(1).png"));
   	logo.setBounds(10, 20, 180, 30);
   	panel.add(logo);
   	//제목
