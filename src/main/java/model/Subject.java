@@ -1,9 +1,10 @@
 package model;
 
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+
+import java.util.List;
 
 @AllArgsConstructor
 @Builder
@@ -15,14 +16,14 @@ public class Subject {
     private String location;
     private String startTime;
     private String endTime;
-    private Professor teacher;
-    private List<Student> students;
+    private User teacher;
+    private List<User> students;
 
-    public void setTeacher(Professor teacher) {
+    public void setTeacher(User teacher) {
         this.teacher = teacher;
     }
 
-    public void addStudent(Student student) {
+    public void addStudent(User student) {
         students.add(student);
     }
 }
