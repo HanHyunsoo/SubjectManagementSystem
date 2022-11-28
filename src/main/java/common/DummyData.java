@@ -1,11 +1,9 @@
 package common;
 
 import lombok.Getter;
-import model.GradeInfo;
-import model.Subject;
-import model.User;
-import model.UserType;
+import model.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +14,7 @@ public class DummyData{
     private final List<User> students = new ArrayList<>();
     private final List<Subject> subjects = new ArrayList<>();
     private final List<GradeInfo> gradeInfos = new ArrayList<>();
+    private final List<Attendance> attendances = new ArrayList<>();
   
     public DummyData(){
     	
@@ -87,6 +86,18 @@ public class DummyData{
         gradeInfos.add(gradeInfo_3);
         gradeInfos.add(gradeInfo_4);
 
+        Attendance attendance1 = Attendance.builder()
+                .gradeInfo(gradeInfo_1)
+                .time(LocalDate.of(2021, 11, 24))
+                .build();
+
+        Attendance attendance2 = Attendance.builder()
+                .gradeInfo(gradeInfo_1)
+                .time(LocalDate.of(2021, 12, 1))
+                .build();
+
+        attendances.add(attendance1);
+        attendances.add(attendance2);
     }
        
     //메인메소드
