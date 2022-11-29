@@ -15,6 +15,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ProfessorView {
 
@@ -336,18 +337,153 @@ class SubjectManage extends JFrame{
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				JTable table1 = (JTable) e.getSource();
-				System.out.println(table1.getSelectedColumn());
-				System.out.println(table1.getSelectedRow());
 				Subject target = subjects.get(table1.getSelectedRow());
-				StudentManage studentManage = new StudentManage(target.getName() + " 학생 목록", target.getStudents());
-				studentManage.setSize(200, 300);
-				studentManage.setVisible(true);
+
+				List<GradeInfo> gradeInfos = dummyData.getGradeInfos().stream().filter(x -> x.getSubject() == target).collect(Collectors.toList());
+
+				GradeManage gradeManage = new GradeManage(target.getName() + " 학생 목록", gradeInfos);
+				gradeManage.setSize(700, 500);
+				gradeManage.setVisible(true);
 			}
 		});
 //		dtm.addTableModelListener(e -> System.out.println(e.getSource()));
 
 		add(new JScrollPane(table), BorderLayout.CENTER);
 		
+	}
+}
+
+class GradeManage extends JFrame {
+
+	private String title;
+	private List<GradeInfo> gradeInfos;
+	private JTable table = new JTable();
+	private static final String[] columns = {"학번", "학생명", "출석점수", "중간점수", "기말점수", "최종점수", "학점", "비고"};
+	GradeManage(String title, List<GradeInfo> gradeInfos) {
+		super(title);
+		this.title = title;
+		this.gradeInfos = gradeInfos;
+
+		Object[][] data = new Object[gradeInfos.size()][8];
+
+		int index = 0;
+		for (GradeInfo gradeInfo : gradeInfos) {
+			data[index][0] = gradeInfo.getStudent().getUserId();
+			data[index][1] = gradeInfo.getStudent().getName();
+			data[index][2] = gradeInfo.getAttendanceScore();
+			data[index][3] = gradeInfo.getMidtermExamScore();
+			data[index][4] = gradeInfo.getFinalExamScore();
+			data[index][5] = gradeInfo.getTotalScore();
+			data[index][6] = gradeInfo.getGrade();
+			data[index][7] = gradeInfo.getNote();
+			index++;
+		}
+
+		String[] columns = {"학번", "학생명", "출석점수", "중간점수", "기말점수", "최종점수", "학점", "비고"};
+
+		table.setModel(new DefaultTableModel(data, columns) {
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		});
+
+		GradeManage thisG = this;
+
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				JTable table1 = (JTable) e.getSource();
+				GradeInfo target = gradeInfos.get(table1.getSelectedRow());
+				String title = String.format("(%s, %s) 학점 수정", target.getStudent().getUserId(), target.getStudent().getName());
+
+				EditGradeInfo editGradeInfo = new EditGradeInfo(title, target, thisG);
+				editGradeInfo.setSize(300, 500);
+				editGradeInfo.setVisible(true);
+			}
+		});
+
+		add(new JScrollPane(table), BorderLayout.CENTER);
+	}
+
+	@Override
+	public void repaint() {
+		Object[][] data = new Object[gradeInfos.size()][8];
+
+		int index = 0;
+		for (GradeInfo gradeInfo : gradeInfos) {
+			data[index][0] = gradeInfo.getStudent().getUserId();
+			data[index][1] = gradeInfo.getStudent().getName();
+			data[index][2] = gradeInfo.getAttendanceScore();
+			data[index][3] = gradeInfo.getMidtermExamScore();
+			data[index][4] = gradeInfo.getFinalExamScore();
+			data[index][5] = gradeInfo.getTotalScore();
+			data[index][6] = gradeInfo.getGrade();
+			data[index][7] = gradeInfo.getNote();
+			index++;
+		}
+
+		table.setModel(new DefaultTableModel(data, columns) {
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		});
+	}
+}
+
+class EditGradeInfo extends JFrame {
+
+	private JTextField aScoreField, mScoreField, fScoreField, tScoreField, gradeField;
+	private JTextArea noteField;
+	EditGradeInfo(String title, GradeInfo gradeInfo, GradeManage gradeManage) {
+		setTitle(title);
+		setLayout(new GridLayout(0, 2));
+
+		aScoreField = new JTextField();
+		aScoreField.setText(gradeInfo.getAttendanceScore().toString());
+		mScoreField = new JTextField();
+		mScoreField.setText(gradeInfo.getMidtermExamScore().toString());
+		fScoreField = new JTextField();
+		fScoreField.setText(gradeInfo.getFinalExamScore().toString());
+		tScoreField = new JTextField();
+		tScoreField.setText(gradeInfo.getTotalScore().toString());
+		gradeField = new JTextField();
+		gradeField.setText(gradeInfo.getGrade());
+		noteField = new JTextArea();
+		noteField.setText(gradeInfo.getNote());
+
+		add(new JLabel("출석 점수", SwingConstants.CENTER));
+		add(aScoreField);
+		add(new JLabel("중간 점수", SwingConstants.CENTER));
+		add(mScoreField);
+		add(new JLabel("기말 점수", SwingConstants.CENTER));
+		add(fScoreField);
+		add(new JLabel("최종 점수", SwingConstants.CENTER));
+		add(tScoreField);
+		add(new JLabel("학점", SwingConstants.CENTER));
+		add(gradeField);
+		add(new JLabel("비고", SwingConstants.CENTER));
+		add(new JScrollPane(noteField));
+		JButton ok = new JButton("수정");
+		JButton cancel = new JButton("취소");
+		add(ok);
+		add(cancel);
+
+		ok.addActionListener(e -> {
+			Integer attendanceScore = Integer.parseInt(aScoreField.getText());
+			Integer midtermExamScore = Integer.parseInt(mScoreField.getText());
+			Integer finalExamScore = Integer.parseInt(fScoreField.getText());
+			Integer totalScore = Integer.parseInt(tScoreField.getText());
+			String grade = gradeField.getText();
+			String note = noteField.getText();
+
+			gradeInfo.update(attendanceScore, midtermExamScore, finalExamScore, totalScore, grade, note);
+			JOptionPane.showMessageDialog(null, "수정 완료");
+			gradeManage.repaint();
+			dispose();
+		});
+
+		cancel.addActionListener(e -> dispose());
+
 	}
 }
 

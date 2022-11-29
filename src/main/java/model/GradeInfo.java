@@ -18,4 +18,13 @@ public class GradeInfo {
     private Integer totalScore;
     private String grade;
     private String note;
+
+    public void update(Integer attendanceScore, Integer midtermExamScore, Integer finalExamScore, Integer totalScore, String grade, String note) {
+        this.attendanceScore = attendanceScore;
+        this.midtermExamScore = midtermExamScore;
+        this.finalExamScore = finalExamScore;
+        this.totalScore = totalScore;
+        this.grade = grade;
+        this.note = note;
+    }
 }
