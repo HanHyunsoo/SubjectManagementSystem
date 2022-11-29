@@ -45,7 +45,7 @@ public class Grade extends javax.swing.JFrame {
         Grpanel = new javax.swing.JPanel();
         dB1 = new DB(student, dummyData);
         AtPanel = new javax.swing.JPanel();
-        attendance1 = new attendance();
+        attendance1 = new attendance(dummyData, student);
         Messeage = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();

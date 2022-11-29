@@ -3,15 +3,27 @@ package view;/*
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 
+import common.DummyData;
+import model.Attendance;
+import model.User;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * @author User
  */
 public class attendance extends javax.swing.JPanel {
 
+    private DummyData dummyData;
+    private User user;
+
     /**
      * Creates new form DB
      */
-    public attendance() {
+    public attendance(DummyData dummyData, User user) {
+        this.dummyData = dummyData;
+        this.user = user;
         initComponents();
     }
 
@@ -27,22 +39,28 @@ public class attendance extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
+        List<Attendance> attendances = dummyData.getAttendances().stream().filter(x -> x.getGradeInfo().getStudent() == user).collect(Collectors.toList());
+
+        Object[][] data = new Object[attendances.size()][2];
+
+        int index = 0;
+        for (Attendance attendance : attendances) {
+            data[index][0] = attendance.getGradeInfo().getSubject().getName();
+            data[index][1] = attendance.getTime();
+            index++;
+        }
+
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-                new Object[][]{
-                        {null, null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null}
-                },
+               data,
                 new String[]{
-                        "name", "Subject", "Date1", "Date2"
+                        "과목명", "출석일자"
                 }
         ) {
             Class[] types = new Class[]{
-                    java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class
+                    java.lang.String.class, String.class
             };
             boolean[] canEdit = new boolean[]{
-                    false, true, true, true
+                    false, false
             };
 
             public Class getColumnClass(int columnIndex) {
