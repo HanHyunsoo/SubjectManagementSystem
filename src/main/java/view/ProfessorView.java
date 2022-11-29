@@ -23,14 +23,14 @@ public class ProfessorView {
 	private User professor;
 
 	//메인메소드
-    public static void main(String[] args) {
-		DummyData d = new DummyData();
-		d.init();
-		User user = d.getUsers().get(0);
-        //뷰 생성
-        View view = new View(d, user);
-        view.MakeView();
-    }
+//    public static void main(String[] args) {
+//		DummyData d = new DummyData();
+//		d.init();
+//		User user = d.getUsers().get(0);
+//        //뷰 생성
+//        View view = new View(d, user);
+//        view.MakeView();
+//    }
 
 	public void init() {
 		View view = new View(dummyData, professor);
