@@ -4,18 +4,26 @@
  */
 package view;
 
+import common.DummyData;
 import keepto.KGradientPanel;
+import model.User;
+import model.UserType;
+
+import javax.swing.*;
+import java.util.List;
 
 /**
  *
  * @author User
  */
 public class Loginframe extends javax.swing.JFrame {
+    private DummyData dummyData;
 
     /**
      * Creates new form NewJFrame1
      */
-    public Loginframe() {
+    public Loginframe(DummyData dummyData) {
+        this.dummyData = dummyData;
         initComponents();
     }
 
@@ -27,13 +35,12 @@ public class Loginframe extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
         kGradientPanel1 = new KGradientPanel();
         jPanel3 = new javax.swing.JPanel();
         LBLlogin = new javax.swing.JLabel();
         PWtxt = new javax.swing.JLabel();
         IDtxt = new javax.swing.JLabel();
-        PWField = new javax.swing.JTextField();
+        PWField = new javax.swing.JPasswordField();
         IDField = new javax.swing.JTextField();
         BtnLogin = new javax.swing.JButton();
         BtnExit = new javax.swing.JButton();
@@ -56,9 +63,9 @@ public class Loginframe extends javax.swing.JFrame {
         IDtxt.setFont(new java.awt.Font("맑은 고딕", 0, 18)); // NOI18N
         IDtxt.setText(" ID : ");
 
-        PWField.setText("Password");
-
-        IDField.setText("ID");
+//        PWField.setText("Password");
+//
+//        IDField.setText("ID");
 
         BtnLogin.setText("Login (L)");
         BtnLogin.addActionListener(new java.awt.event.ActionListener() {
@@ -173,6 +180,25 @@ public class Loginframe extends javax.swing.JFrame {
 
     private void BtnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnLoginActionPerformed
         // TODO add your handling code here:
+        List<User> users = dummyData.getUsers();
+        boolean isLogin = false;
+        for (User user : users) {
+            if (IDField.getText().equals(user.getUserId()) && PWField.getText().equals(user.getPassword())) {
+                if (user.getUserType() == UserType.STUDENT) {
+                    new Grade(user, dummyData).setVisible(true);
+                } else {
+                    new ProfessorView(dummyData, user).init();
+                }
+                isLogin = true;
+                break;
+            }
+        }
+
+        if (!isLogin) {
+            JOptionPane.showMessageDialog(null, "Id 혹은 Password가 일치하지 않습니다.");
+        } else {
+            this.dispose();
+        }
     }//GEN-LAST:event_BtnLoginActionPerformed
 
     private void BtnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnExitActionPerformed
@@ -210,11 +236,12 @@ public class Loginframe extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-
+        DummyData d = new DummyData();
+        d.init();
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Loginframe().setVisible(true);
+                new Loginframe(d).setVisible(true);
             }
         });
     }
@@ -225,7 +252,7 @@ public class Loginframe extends javax.swing.JFrame {
     private javax.swing.JTextField IDField;
     private javax.swing.JLabel IDtxt;
     private javax.swing.JLabel LBLlogin;
-    private javax.swing.JTextField PWField;
+    private javax.swing.JPasswordField PWField;
     private javax.swing.JLabel PWtxt;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel3;

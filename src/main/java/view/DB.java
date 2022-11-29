@@ -3,15 +3,30 @@ package view;/*
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 
+import common.DummyData;
+import model.GradeInfo;
+import model.User;
+
+import javax.swing.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * @author User
  */
 public class DB extends javax.swing.JPanel {
 
+    private User user;
+    private DummyData dummyData;
+
     /**
      * Creates new form DB
      */
-    public DB() {
+    public DB(User user, DummyData dummyData) {
+        this.user = user;
+        this.dummyData = dummyData;
         initComponents();
     }
 
@@ -27,22 +42,33 @@ public class DB extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
+        List<GradeInfo> myGradeInfos = dummyData.getGradeInfos().stream().filter(x -> x.getStudent() == user).collect(Collectors.toList());
+
+        Object[][] data = new Object[myGradeInfos.size()][7];
+
+        int index = 0;
+        for (GradeInfo gradeInfo : myGradeInfos) {
+            data[index][0] = gradeInfo.getSubject().getName();
+            data[index][1] = gradeInfo.getAttendanceScore();
+            data[index][2] = gradeInfo.getMidtermExamScore();
+            data[index][3] = gradeInfo.getFinalExamScore();
+            data[index][4] = gradeInfo.getTotalScore();
+            data[index][5] = gradeInfo.getGrade();
+            data[index][6] = gradeInfo.getNote();
+            index++;
+        }
+
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-                new Object[][]{
-                        {null, null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null}
-                },
+                data,
                 new String[]{
-                        "name", "Subject", "Prop", "Grade"
+                        "과목명", "출석점수", "중간점수", "기말점수", "최종 점수", "학점", "기타"
                 }
         ) {
             Class[] types = new Class[]{
-                    java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class
+                    java.lang.String.class, Integer.class, Integer.class, Integer.class, Integer.class, String.class, String.class
             };
             boolean[] canEdit = new boolean[]{
-                    false, true, true, true
+                    false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -54,6 +80,18 @@ public class DB extends javax.swing.JPanel {
             }
         });
         jScrollPane1.setViewportView(jTable1);
+
+        jTable1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                JTable table2 = (JTable) e.getSource();
+                System.out.println(table2.getSelectedRow());
+                if (table2.getSelectedColumn() == 6) {
+                    String note = myGradeInfos.get(table2.getSelectedRow()).getNote();
+                    JOptionPane.showMessageDialog(null, note);
+                }
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);

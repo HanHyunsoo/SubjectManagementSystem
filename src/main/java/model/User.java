@@ -1,23 +1,28 @@
 package model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import java.util.ArrayList;
 import java.util.List;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@SuperBuilder
-public abstract class User {
+@Builder
+@Getter
+public class User {
 
-    protected Long id;
-    protected String userId;
-    protected String password;
-    protected String name;
-    protected List<Subject> subjects = new ArrayList<>();
+    private Long id;
+    private String userId;
+    private String password;
+    private String name;
+    @Builder.Default
+    private List<Subject> subjects = new ArrayList<>();
+    private UserType userType;
 
-    protected void addSubject(Subject subject) {
+    public void addSubject(Subject subject) {
         subjects.add(subject);
     }
 }

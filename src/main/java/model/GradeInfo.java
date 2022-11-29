@@ -11,7 +11,7 @@ public class GradeInfo {
 
     private Long id;
     private Subject subject;
-    private Student student;
+    private User student;
     private Integer attendanceScore;
     private Integer midtermExamScore;
     private Integer finalExamScore;
